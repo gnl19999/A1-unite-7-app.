@@ -55,9 +55,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none;
+            pointer-events: none; /* Çocuk öğeleri engellemek için */
             transition: background 0.3s ease;
-            overflow: hidden; /* Resmin taşmasını engeller */
+            overflow: hidden; 
         }
         
         .word-image-display img {
@@ -66,6 +66,7 @@
             object-fit: contain; /* Görüntüyü bozmadan sığdırır */
             border-radius: 15px;
             transition: transform 0.3s ease;
+            pointer-events: auto; /* Image'ın üzerine tıklama olayını geri açar */
         }
         
         .card:hover .word-image-display {
@@ -80,13 +81,13 @@
         .word-row { display: flex; align-items: center; gap: 15px; }
         
         .speaker-icon { 
-            /* İkon yerine düz metin (Emoji) kullanıldı */
             color: #1976D2;
             font-size: 28px; 
             cursor: pointer; 
             padding: 10px;
             border-radius: 50%;
             transition: background 0.2s; 
+            user-select: none;
         }
         .speaker-icon:hover { background: #E3F2FD; }
         
@@ -136,7 +137,7 @@
         // --- JAVASCRIPT BAŞLANGIÇ ---
 
         /**
-         * Kelime Listesi: 4, 12 ve 14. kartların görsel URL'leri güncellendi.
+         * Kelime Listesi: 4, 12 ve 14. kartların görsel URL'leri güncellenmiş hali.
          */
         const wordList = [
             { 
@@ -169,7 +170,7 @@
                 example_en: "He bought a brand new red [car].", 
                 example_tr: "Yepyeni, kırmızı bir araba satın aldı.", 
                 synonyms: "automobile, vehicle", 
-                // GÜNCELLENDİ (4)
+                // *** DÜZELTME 1: 4. Kart (İndeks 3) ***
                 image_url: "https://img.freepik.com/premium-vektor/sevimli-cizgi-film-araba-illustrasyon-tasarimi_1277164-25213.jpg?w=360" 
             },
             { 
@@ -234,7 +235,7 @@
                 example_en: "The market is right in the [centre] of the town.", 
                 example_tr: "Pazar, kasabanın tam ortasında.", 
                 synonyms: "middle, hub, core", 
-                // GÜNCELLENDİ (12)
+                // *** DÜZELTME 2: 12. Kart (İndeks 11) ***
                 image_url: "https://media.istockphoto.com/id/700491580/tr/vekt%C3%B6r/arka-plan-ill%C3%BCstrasyon-%C3%A7ift%C3%A7iler-pazar.jpg?s=612x612&w=0&k=20&c=-fiMI1n5agbN30xB2r1MzQ2Jzo5NkcM-iofJaFTGMJg=" 
             },
             { 
@@ -251,7 +252,7 @@
                 example_en: "Please take a [chair] and sit down.", 
                 example_tr: "Lütfen bir sandalye alıp oturun.", 
                 synonyms: "seat, bench, leader", 
-                // GÜNCELLENDİ (14)
+                // *** DÜZELTME 3: 14. Kart (İndeks 13) ***
                 image_url: "https://png.pngtree.com/png-clipart/20231129/original/pngtree-man-sitting-in-chair-office-photo-png-image_13739517.png" 
             },
             { 
@@ -311,7 +312,6 @@
         let isSpeaking = false;
 
         function speakWord(text) {
-            // Seslendirme devam ediyorsa yeni bir seslendirme başlatmak için eskisini iptal et.
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 
@@ -343,11 +343,11 @@
             // Eş anlamlılar boşsa '-' göster
             const synonymsText = synonyms || '-';
             
-            // **Hata Yönetimi Eklendi: Görsel yüklenemezse yer tutucu gösterilir.**
-            const safeImageUrl = image_url || 'https://via.placeholder.com/350x180?text=G%C3%B6rsel+Yok'; // Eğer URL boşsa bile placeholder göster
+            // Hata Yönetimi: Görsel yüklenemezse yer tutucu gösterilir.
+            const safeImageUrl = image_url || 'https://via.placeholder.com/350x180?text=G%C3%B6rsel+Yok'; 
             
             const cardHTML = `
-                <div class="card" id="active-card" onclick="nextCard(event)"> 
+                <div class="card" id="active-card" onclick="handleCardClick(event)"> 
                     
                     <div class="word-image-display">
                         <img src="${safeImageUrl}" 
@@ -395,12 +395,17 @@
             updateInfoBar();
         }
         
-        // Kartları ilerletme (Sağ ok, Boşluk, Tıklama)
-        const nextCard = (event) => {
-            if (event && event.target.closest('.speaker-icon')) {
-                return;
+        // Kartın tıklanma olayını yöneten yeni fonksiyon
+        const handleCardClick = (event) => {
+            // Sadece .card öğesine tıklanırsa (speaker-icon'a değilse) kartı ilerlet
+            if (!event.target.closest('.speaker-icon')) {
+                nextCard();
             }
+        };
 
+        // Kartları ilerletme (Sağ ok, Boşluk, Tıklama)
+        const nextCard = () => {
+            
             const activeCard = document.getElementById('active-card');
             if (activeCard) {
                 activeCard.classList.remove('active');
@@ -448,10 +453,6 @@
                 speakWord(wordList[currentIndex].word);
             }
         });
-
-        // Global erişimi sağla
-        window.nextCard = nextCard; 
-        window.speakWord = speakWord;
 
         // Sayfa Yüklendiğinde Başlatma
         document.addEventListener('DOMContentLoaded', function() {
