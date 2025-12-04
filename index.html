@@ -55,7 +55,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Çocuk öğeleri engellemek için */
+            pointer-events: none;
             transition: background 0.3s ease;
             overflow: hidden; 
         }
@@ -66,7 +66,7 @@
             object-fit: contain; /* Görüntüyü bozmadan sığdırır */
             border-radius: 15px;
             transition: transform 0.3s ease;
-            pointer-events: auto; /* Image'ın üzerine tıklama olayını geri açar */
+            pointer-events: auto;
         }
         
         .card:hover .word-image-display {
@@ -137,7 +137,8 @@
         // --- JAVASCRIPT BAŞLANGIÇ ---
 
         /**
-         * Kelime Listesi: 4, 12 ve 14. kartların görsel URL'leri güncellenmiş hali.
+         * DÜZELTME: 5., 7., 8., 10. ve 19. (Indeks 4, 6, 7, 9, 18) kartların 
+         * görsel URL'leri çalışan alternatif linklerle güncellendi.
          */
         const wordList = [
             { 
@@ -170,16 +171,16 @@
                 example_en: "He bought a brand new red [car].", 
                 example_tr: "Yepyeni, kırmızı bir araba satın aldı.", 
                 synonyms: "automobile, vehicle", 
-                // *** DÜZELTME 1: 4. Kart (İndeks 3) ***
                 image_url: "https://img.freepik.com/premium-vektor/sevimli-cizgi-film-araba-illustrasyon-tasarimi_1277164-25213.jpg?w=360" 
             },
+            // DÜZELTME 1: 5. Kart (İndeks 4: card) - Yeni URL
             { 
                 word: "card", 
                 meaning: "kart (kredi, oyun, kimlik)", 
                 example_en: "Did you bring your student [card]?", 
                 example_tr: "Öğrenci kartını getirdin mi?", 
                 synonyms: "ticket, plastic money", 
-                image_url: "https://media.istockphoto.com/id/1419375918/vector/id-card-icon-drivers-license-identification-icon-vector-illustration.jpg?s=612x612&w=0&k=20&c=1m1d4x9J6v4F7M8k6dG6U9q3Yv7lK3T0h_yP9o7M2e8=" 
+                image_url: "https://cdn.pixabay.com/photo/2016/06/15/15/48/card-1459422_1280.png" 
             },
             { 
                 word: "career", 
@@ -189,21 +190,23 @@
                 synonyms: "profession, occupation", 
                 image_url: "https://st2.depositphotos.com/1907633/6917/i/450/depositphotos_69170339-stock-photo-smart-medical-doctor-hand-showing.jpg" 
             },
+            // DÜZELTME 2: 7. Kart (İndeks 6: carrot) - Yeni URL
             { 
                 word: "carrot", 
                 meaning: "havuç", 
                 example_en: "Rabbits love to eat [carrots].", 
                 example_tr: "Tavşanlar havuç yemeyi sever.", 
                 synonyms: "vegetable, root", 
-                image_url: "https://media.istockphoto.com/id/1882625245/vector/photo-realistic-3d-carrot.jpg?s=612x612&w=0&k=20&c=MTyituJt6o0VesTAXDB4u6fr_pdRfNzAAaFi0ByMl3o=" 
+                image_url: "https://static.vecteezy.com/system/resources/previews/010/834/628/non_2x/realistic-carrot-png.png" 
             },
+            // DÜZELTME 3: 8. Kart (İndeks 7: carry) - Yeni URL
             { 
                 word: "carry", 
                 meaning: "taşımak, götürmek", 
                 example_en: "Help me [carry] these heavy boxes.", 
                 example_tr: "Bu ağır kutuları taşımama yardım et.", 
                 synonyms: "transport, bear, move", 
-                image_url: "https://media.istockphoto.com/id/1280857390/vector/3d-mockup-with-a-cardboard-box-isolated-on-a-white-background-3d-illustration-cardboard-box.jpg?s=612x612&w=0&k=20&c=1d7x5YQ3k-G5n5P2h5e4g3T4x4M9w2h4B3f6b4G3s6o=" 
+                image_url: "https://cdn.pixabay.com/photo/2016/03/31/19/52/box-1296531_1280.png" 
             },
             { 
                 word: "cat", 
@@ -213,13 +216,14 @@
                 synonyms: "feline, kitten", 
                 image_url: "https://st5.depositphotos.com/1007566/66341/v/450/depositphotos_663419010-stock-illustration-cute-kitten-sitting-vector-design.jpg" 
             },
+            // DÜZELTME 4: 10. Kart (İndeks 9: CD) - Yeni URL
             { 
                 word: "CD", 
                 meaning: "CD (Compact Disc)", 
                 example_en: "I found an old music [CD] in the drawer.", 
                 example_tr: "Çekmecede eski bir müzik CD'si buldum.", 
                 synonyms: "compact disc, album", 
-                image_url: "https://media.istockphoto.com/id/639534654/vector/realistic-vector-cdwith-cover-icon-design-template.jpg?s=612x612&w=0&k=20&c=ESfGhzeHxS1XdIBFboBGsZ1KdN68-Kchj4Oqu-Q4Woo=" 
+                image_url: "https://cdn.pixabay.com/photo/2014/11/17/20/00/cd-536067_1280.png" 
             },
             { 
                 word: "cent", 
@@ -235,7 +239,6 @@
                 example_en: "The market is right in the [centre] of the town.", 
                 example_tr: "Pazar, kasabanın tam ortasında.", 
                 synonyms: "middle, hub, core", 
-                // *** DÜZELTME 2: 12. Kart (İndeks 11) ***
                 image_url: "https://media.istockphoto.com/id/700491580/tr/vekt%C3%B6r/arka-plan-ill%C3%BCstrasyon-%C3%A7ift%C3%A7iler-pazar.jpg?s=612x612&w=0&k=20&c=-fiMI1n5agbN30xB2r1MzQ2Jzo5NkcM-iofJaFTGMJg=" 
             },
             { 
@@ -252,7 +255,6 @@
                 example_en: "Please take a [chair] and sit down.", 
                 example_tr: "Lütfen bir sandalye alıp oturun.", 
                 synonyms: "seat, bench, leader", 
-                // *** DÜZELTME 3: 14. Kart (İndeks 13) ***
                 image_url: "https://png.pngtree.com/png-clipart/20231129/original/pngtree-man-sitting-in-chair-office-photo-png-image_13739517.png" 
             },
             { 
@@ -287,13 +289,14 @@
                 synonyms: "verify, examine, test", 
                 image_url: "https://us.123rf.com/450wm/whitecity/whitecity2411/whitecity241101689/237731388-kitchen-furniture-and-equipment-in-flat-style-vector-illustration-of-household-appliances.jpg?ver=6" 
             },
+            // DÜZELTME 5: 19. Kart (İndeks 18: cheese) - Yeni URL
             { 
                 word: "cheese", 
                 meaning: "peynir", 
                 example_en: "I love pasta with extra [cheese].", 
                 example_tr: "Fazla peynirli makarnayı severim.", 
                 synonyms: "dairy product", 
-                image_url: "https://media.istockphoto.com/id/494565026/photo/macaroni-and-cheese.jpg?s=612x612&w=0&k=20&c=6wz_5m_q5f6v7j9j1l3q6d5l9v3r0y5j2t4m0c8r6q8=" 
+                image_url: "https://cdn.pixabay.com/photo/2016/09/27/15/45/cheese-1704229_1280.png" 
             },
             { 
                 word: "chicken", 
@@ -395,15 +398,12 @@
             updateInfoBar();
         }
         
-        // Kartın tıklanma olayını yöneten yeni fonksiyon
         const handleCardClick = (event) => {
-            // Sadece .card öğesine tıklanırsa (speaker-icon'a değilse) kartı ilerlet
             if (!event.target.closest('.speaker-icon')) {
                 nextCard();
             }
         };
 
-        // Kartları ilerletme (Sağ ok, Boşluk, Tıklama)
         const nextCard = () => {
             
             const activeCard = document.getElementById('active-card');
@@ -422,7 +422,6 @@
             }, 300); 
         };
         
-        // Kartları geri alma (Sol ok)
         const prevCard = () => {
             const activeCard = document.getElementById('active-card');
             if (activeCard) {
@@ -463,6 +462,11 @@
                 infoText.textContent = 'Liste boş.';
             }
         });
+        
+        // Global erişimi sağla (Gerekli olmasa da, dışarıdan erişim için korundu)
+        window.handleCardClick = handleCardClick;
+        window.speakWord = speakWord;
+
         // --- JAVASCRIPT BİTİŞ ---
     </script>
 </body>
