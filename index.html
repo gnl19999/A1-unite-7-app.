@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelime Kartları | GÖRSEL URL VERSİYON (DÜZELTİLMİŞ)</title>
+    <title>Kelime Kartları | GÖRSEL URL VERSİYON</title>
     <style>
         /* --- STİL BAŞLANGIÇ --- */
         body {
@@ -28,8 +28,8 @@
             position: relative;
             margin-top: 20px;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        box-shadow 0.2s ease,
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.2s ease, 
                         opacity 0.3s ease;
             opacity: 0;
             transform: translateY(15px) scale(0.95);
@@ -40,10 +40,9 @@
             transform: translateY(0) scale(1);
         }
         
-        /* Düzeltme 1: Bu kural, kart geçiş animasyonuyla çakıştığı için kaldırıldı.
         .card:active {
-            transform: scale(0.97); 
-        } */
+            transform: scale(0.97);
+        } 
 
         /* YENİ GÖRSEL STİLİ */
         .word-image-display {
@@ -64,7 +63,6 @@
         .word-image-display img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: cover; /* Contain yerine cover denenebilir, ancak orijinal kodda 'contain' tercih edilmiş. 'contain' geri getirildi. */
             object-fit: contain; /* Görüntüyü bozmadan sığdırır */
             border-radius: 15px;
             transition: transform 0.3s ease;
@@ -138,7 +136,7 @@
         // --- JAVASCRIPT BAŞLANGIÇ ---
 
         /**
-         * Kelime Listesi: Görsel URL'leri daha stabil kaynaklarla güncellendi.
+         * Kelime Listesi: 4, 12 ve 14. kartların görsel URL'leri güncellendi.
          */
         const wordList = [
             { 
@@ -171,8 +169,8 @@
                 example_en: "He bought a brand new red [car].", 
                 example_tr: "Yepyeni, kırmızı bir araba satın aldı.", 
                 synonyms: "automobile, vehicle", 
-                // *** DÜZELTME 2: 4. Kart (İndeks 3) - Daha güvenilir URL ***
-                image_url: "https://picsum.photos/350/180?random=1" 
+                // *** DÜZELTME 1: 4. Kart (İndeks 3) ***
+                image_url: "https://img.freepik.com/premium-vektor/sevimli-cizgi-film-araba-illustrasyon-tasarimi_1277164-25213.jpg?w=360" 
             },
             { 
                 word: "card", 
@@ -236,8 +234,8 @@
                 example_en: "The market is right in the [centre] of the town.", 
                 example_tr: "Pazar, kasabanın tam ortasında.", 
                 synonyms: "middle, hub, core", 
-                // *** DÜZELTME 2: 12. Kart (İndeks 11) - Daha güvenilir URL ***
-                image_url: "https://media.istockphoto.com/id/1149721832/vector/farmers-market-flat-illustration.jpg?s=612x612&w=0&k=20&c=p71s0H2fE7N9O1p8t0R6Q9V0Z0X3p8y4V6g0G9N6H6k=" 
+                // *** DÜZELTME 2: 12. Kart (İndeks 11) ***
+                image_url: "https://media.istockphoto.com/id/700491580/tr/vekt%C3%B6r/arka-plan-ill%C3%BCstrasyon-%C3%A7ift%C3%A7iler-pazar.jpg?s=612x612&w=0&k=20&c=-fiMI1n5agbN30xB2r1MzQ2Jzo5NkcM-iofJaFTGMJg=" 
             },
             { 
                 word: "century", 
@@ -253,8 +251,8 @@
                 example_en: "Please take a [chair] and sit down.", 
                 example_tr: "Lütfen bir sandalye alıp oturun.", 
                 synonyms: "seat, bench, leader", 
-                // *** DÜZELTME 3: 14. Kart (İndeks 13) - Daha güvenilir URL ***
-                image_url: "https://media.istockphoto.com/id/1029415494/vector/armchair-flat-style-vector-illustration.jpg?s=612x612&w=0&k=20&c=z1l7f7d9B7D4z4d5g6v8s9c2h4g5x8b7E6R8m4n9w2o=" 
+                // *** DÜZELTME 3: 14. Kart (İndeks 13) ***
+                image_url: "https://png.pngtree.com/png-clipart/20231129/original/pngtree-man-sitting-in-chair-office-photo-png-image_13739517.png" 
             },
             { 
                 word: "change", 
@@ -345,10 +343,8 @@
             // Eş anlamlılar boşsa '-' göster
             const synonymsText = synonyms || '-';
             
-            // Hata Yönetimi Eklendi: Görsel yüklenemezse yer tutucu gösterilir.
-            // Güvenilir Placeholder URL'si
-            const placeholderUrl = 'https://via.placeholder.com/350x180?text=G%C3%B6rsel+Y%C3%BCklenemedi'; 
-            const safeImageUrl = image_url || placeholderUrl; 
+            // **Hata Yönetimi Eklendi: Görsel yüklenemezse yer tutucu gösterilir.**
+            const safeImageUrl = image_url || 'https://via.placeholder.com/350x180?text=G%C3%B6rsel+Yok'; // Eğer URL boşsa bile placeholder göster
             
             const cardHTML = `
                 <div class="card" id="active-card" onclick="nextCard(event)"> 
@@ -356,7 +352,7 @@
                     <div class="word-image-display">
                         <img src="${safeImageUrl}" 
                              alt="${word} kelimesini temsil eden görsel"
-                             onerror="this.onerror=null; this.src='${placeholderUrl}';">
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/350x180?text=G%C3%B6rsel+Y%C3%BCklenemedi';">
                     </div>
 
                     <div class="header">
