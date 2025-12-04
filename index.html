@@ -1,457 +1,457 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelime Kartları | GÖRSEL URL VERSİYON</title>
-    <style>
-        /* --- STİL BAŞLANGIÇ --- */
-        body {
-            background-color: #f0f2f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            justify-content: center;
-            user-select: none;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelime Kartları | GÖRSEL URL VERSİYON</title>
+    <style>
+        /* --- STİL BAŞLANGIÇ --- */
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            justify-content: center;
+            user-select: none;
+        }
 
-        .card {
-            background-color: white;
-            width: 350px;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            position: relative;
-            margin-top: 20px;
-            cursor: pointer; 
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        box-shadow 0.2s ease, 
-                        opacity 0.3s ease;
-            opacity: 0;
-            transform: translateY(15px) scale(0.95);
-        }
+        .card {
+            background-color: white;
+            width: 350px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            margin-top: 20px;
+            cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        box-shadow 0.2s ease, 
+                        opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px) scale(0.95);
+        }
 
-        .card.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        
-        .card:active {
-            transform: scale(0.97);
-        } 
+        .card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .card:active {
+            transform: scale(0.97);
+        } 
 
-        /* YENİ GÖRSEL STİLİ */
-        .word-image-display {
-            width: 100%;
-            height: 180px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background-color: #E3F2FD; /* Açık mavi arka plan */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            transition: background 0.3s ease;
-            overflow: hidden; /* Resmin taşmasını engeller */
-        }
-        
-        .word-image-display img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Görüntüyü bozmadan sığdırır */
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover .word-image-display {
-            background-color: #BBDEFB; /* Hover'da daha koyu */
-        }
-        
-        .card:hover .word-image-display img {
-            transform: scale(1.05);
-        }
+        /* YENİ GÖRSEL STİLİ */
+        .word-image-display {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #E3F2FD; /* Açık mavi arka plan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            transition: background 0.3s ease;
+            overflow: hidden; /* Resmin taşmasını engeller */
+        }
+        
+        .word-image-display img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Görüntüyü bozmadan sığdırır */
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover .word-image-display {
+            background-color: #BBDEFB; /* Hover'da daha koyu */
+        }
+        
+        .card:hover .word-image-display img {
+            transform: scale(1.05);
+        }
 
-        .header { margin-bottom: 15px; }
-        .word-row { display: flex; align-items: center; gap: 15px; }
-        
-        .speaker-icon { 
-            /* İkon yerine düz metin (Emoji) kullanıldı */
-            color: #1976D2;
-            font-size: 28px; 
-            cursor: pointer; 
-            padding: 10px;
-            border-radius: 50%;
-            transition: background 0.2s; 
-        }
-        .speaker-icon:hover { background: #E3F2FD; }
-        
-        h1 { color: #2D3748; margin: 0; font-size: 36px; font-weight: 800; text-transform: capitalize; }
-        .meaning { color: #718096; margin-top: 5px; margin-left: 58px; font-size: 18px; font-weight: 500;} 
-        
-        .box { 
-            border: 1px solid #E2E8F0; 
-            border-radius: 15px; 
-            padding: 15px; 
-            margin-bottom: 12px; 
-            background: #F7FAFC;
-        }
-        .row { display: flex; gap: 10px; }
-        .tag { font-weight: bold; color: #1976D2; font-size: 14px; min-width: 35px; }
-        .content { flex: 1; }
-        .en-sentence { color: #2D3748; font-size: 16px; margin: 0 0 8px 0; line-height: 1.5; }
-        .highlight { color: #E53E3E; font-weight: bold; background: #fff5f5; padding: 0 4px; border-radius: 4px; }
-        .divider { border-top: 1px dotted #CBD5E0; margin: 5px 0; }
-        .tr-sentence { color: #718096; font-size: 15px; margin: 5px 0 0 0; }
-        .synonyms-text { color: #2D3748; margin: 0; font-size: 15px; }
-        .box.small { padding: 12px 15px; border-radius: 30px; margin-bottom: 0;}
+        .header { margin-bottom: 15px; }
+        .word-row { display: flex; align-items: center; gap: 15px; }
+        
+        .speaker-icon { 
+            /* İkon yerine düz metin (Emoji) kullanıldı */
+            color: #1976D2;
+            font-size: 28px; 
+            cursor: pointer; 
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.2s; 
+        }
+        .speaker-icon:hover { background: #E3F2FD; }
+        
+        h1 { color: #2D3748; margin: 0; font-size: 36px; font-weight: 800; text-transform: capitalize; }
+        .meaning { color: #718096; margin-top: 5px; margin-left: 58px; font-size: 18px; font-weight: 500;} 
+        
+        .box { 
+            border: 1px solid #E2E8F0; 
+            border-radius: 15px; 
+            padding: 15px; 
+            margin-bottom: 12px; 
+            background: #F7FAFC;
+        }
+        .row { display: flex; gap: 10px; }
+        .tag { font-weight: bold; color: #1976D2; font-size: 14px; min-width: 35px; }
+        .content { flex: 1; }
+        .en-sentence { color: #2D3748; font-size: 16px; margin: 0 0 8px 0; line-height: 1.5; }
+        .highlight { color: #E53E3E; font-weight: bold; background: #fff5f5; padding: 0 4px; border-radius: 4px; }
+        .divider { border-top: 1px dotted #CBD5E0; margin: 5px 0; }
+        .tr-sentence { color: #718096; font-size: 15px; margin: 5px 0 0 0; }
+        .synonyms-text { color: #2D3748; margin: 0; font-size: 15px; }
+        .box.small { padding: 12px 15px; border-radius: 30px; margin-bottom: 0;}
 
-        .info-bar {
-            color: #718096;
-            margin-top: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .nav-hint { font-size: 12px; opacity: 0.6; margin-top: 5px;}
-        /* --- STİL BİTİŞ --- */
-    </style>
+        .info-bar {
+            color: #718096;
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-hint { font-size: 12px; opacity: 0.6; margin-top: 5px;}
+        /* --- STİL BİTİŞ --- */
+    </style>
 </head>
 <body>
 
-    <div id="card-container"></div>
-    
-    <div class="info-bar">
-        <span id="info-text">Yükleniyor...</span>
-    </div>
-    <div class="nav-hint">İpucu: Kartları değiştirmek için **Kartın üzerine tıklayın** veya **Yön tuşlarını** kullanın (← / →). Kelimeyi dinlemek için **↑** (Yukarı Ok) tuşuna basın.</div>
+    <div id="card-container"></div>
+    
+    <div class="info-bar">
+        <span id="info-text">Yükleniyor...</span>
+    </div>
+    <div class="nav-hint">İpucu: Kartları değiştirmek için **Kartın üzerine tıklayın** veya **Yön tuşlarını** kullanın (← / →). Kelimeyi dinlemek için **↑** (Yukarı Ok) tuşuna basın.</div>
 
-    <script>
-        // --- JAVASCRIPT BAŞLANGIÇ ---
+    <script>
+        // --- JAVASCRIPT BAŞLANGIÇ ---
 
-        /**
-         * Kelime Listesi: Yeni kelimelerle güncellendi.
-         */
-        const wordList = [
-            { 
-                word: "can", 
-                meaning: "yapabilmek, kutu", 
-                example_en: "I [can] speak three languages fluently.", 
-                example_tr: "Üç dili akıcı bir şekilde konuşabiliyorum.", 
-                synonyms: "be able to, tin, container", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-metal-can-soda-lemonade-vector-illustration-white-background_1441-2401.jpg?w=740" 
-            },
-            { 
-                word: "cannot", 
-                meaning: "yapamamak (can not)", 
-                example_en: "I [cannot] find my keys anywhere.", 
-                example_tr: "Anahtarlarımı hiçbir yerde bulamıyorum.", 
-                synonyms: "can't, be unable to", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-stop-sign-forbidden-prohibition-warning-vector-illustration-white-background_1441-2404.jpg?w=740" 
-            },
-            { 
-                word: "capital", 
-                meaning: "başkent, büyük harf, sermaye", 
-                example_en: "Ankara is the [capital] city of Turkey.", 
-                example_tr: "Ankara, Türkiye'nin başkentidir.", 
-                synonyms: "chief city, funds, assets", 
-                image_url: "https://img.freepik.com/premium-vector/illustration-3d-city-architecture-minimalism_590804-1422.jpg?w=740" 
-            },
-            { 
-                word: "car", 
-                meaning: "araba, otomobil", 
-                example_en: "He bought a brand new red [car].", 
-                example_tr: "Yepyeni, kırmızı bir araba satın aldı.", 
-                synonyms: "automobile, vehicle", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cute-style-icon-cartoon-car-blue-color-white-background-vector-illustration_1441-2374.jpg?w=740" 
-            },
-            { 
-                word: "card", 
-                meaning: "kart (kredi, oyun, kimlik)", 
-                example_en: "Did you bring your student [card]?", 
-                example_tr: "Öğrenci kartını getirdin mi?", 
-                synonyms: "ticket, plastic money", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-credit-card-with-check-mark-vector-illustration-white-background_1441-2384.jpg?w=740" 
-            },
-            { 
-                word: "career", 
-                meaning: "kariyer, meslek", 
-                example_en: "She decided to pursue a [career] in medicine.", 
-                example_tr: "Tıpta bir kariyer yapmaya karar verdi.", 
-                synonyms: "profession, occupation", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-man-climbing-stairs-up-business-growth-success-vector-illustration-white-background_1441-2382.jpg?w=740" 
-            },
-            { 
-                word: "carrot", 
-                meaning: "havuç", 
-                example_en: "Rabbits love to eat [carrots].", 
-                example_tr: "Tavşanlar havuç yemeyi sever.", 
-                synonyms: "vegetable, root", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-carrot-vegetable-with-green-leaves-vector-illustration-white-background_1441-2379.jpg?w=740" 
-            },
-            { 
-                word: "carry", 
-                meaning: "taşımak, götürmek", 
-                example_en: "Help me [carry] these heavy boxes.", 
-                example_tr: "Bu ağır kutuları taşımama yardım et.", 
-                synonyms: "transport, bear, move", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-delivery-box-on-hand-vector-illustration-white-background_1441-2380.jpg?w=740" 
-            },
-            { 
-                word: "cat", 
-                meaning: "kedi", 
-                example_en: "The neighbor's [cat] is very friendly.", 
-                example_tr: "Komşunun kedisi çok cana yakın.", 
-                synonyms: "feline, kitten", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-black-cat-sitting-vector-illustration-white-background_1441-2381.jpg?w=740" 
-            },
-            { 
-                word: "CD", 
-                meaning: "CD (Compact Disc)", 
-                example_en: "I found an old music [CD] in the drawer.", 
-                example_tr: "Çekmecede eski bir müzik CD'si buldum.", 
-                synonyms: "compact disc, album", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-cd-compact-disc-vector-illustration-white-background_1441-2400.jpg?w=740" 
-            },
-            { 
-                word: "cent", 
-                meaning: "sent (para birimi)", 
-                example_en: "I only have fifty [cent]s left.", 
-                example_tr: "Sadece elli sentim kaldı.", 
-                synonyms: "penny, coin", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-money-coin-dollar-vector-illustration-white-background_1441-2399.jpg?w=740" 
-            },
-            { 
-                word: "centre", 
-                meaning: "merkez, orta (center-ABD)", 
-                example_en: "The market is right in the [centre] of the town.", 
-                example_tr: "Pazar, kasabanın tam ortasında.", 
-                synonyms: "middle, hub, core", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-target-bullseye-focus-vector-illustration-white-background_1441-2398.jpg?w=740" 
-            },
-            { 
-                word: "century", 
-                meaning: "yüzyıl", 
-                example_en: "The museum is home to art from the 17th [century].", 
-                example_tr: "Müze, 17. yüzyıldan kalma sanat eserlerine ev sahipliği yapıyor.", 
-                synonyms: "100 years, era", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-hourglass-sand-clock-time-management-vector-illustration-white-background_1441-2397.jpg?w=740" 
-            },
-            { 
-                word: "chair", 
-                meaning: "sandalye, başkan", 
-                example_en: "Please take a [chair] and sit down.", 
-                example_tr: "Lütfen bir sandalye alıp oturun.", 
-                synonyms: "seat, bench, leader", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-wooden-chair-vector-illustration-white-background_1441-2396.jpg?w=740" 
-            },
-            { 
-                word: "change", 
-                meaning: "değiştirmek, bozuk para", 
-                example_en: "We need to [change] our meeting time.", 
-                example_tr: "Toplantı saatimizi değiştirmemiz gerekiyor.", 
-                synonyms: "alter, money, difference", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-recycle-arrows-change-loop-vector-illustration-white-background_1441-2395.jpg?w=740" 
-            },
-            { 
-                word: "chart", 
-                meaning: "grafik, çizelge", 
-                example_en: "The sales [chart] shows a clear increase.", 
-                example_tr: "Satış grafiği net bir artış gösteriyor.", 
-                synonyms: "diagram, graph, table", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-chart-growing-up-bar-graph-vector-illustration-white-background_1441-2394.jpg?w=740" 
-            },
-            { 
-                word: "cheap", 
-                meaning: "ucuz", 
-                example_en: "You can find [cheap] clothes at the market.", 
-                example_tr: "Pazarda ucuz kıyafetler bulabilirsiniz.", 
-                synonyms: "inexpensive, affordable", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-price-tag-with-discount-vector-illustration-white-background_1441-2393.jpg?w=740" 
-            },
-            { 
-                word: "check", 
-                meaning: "kontrol etmek, çek (banka)", 
-                example_en: "Did you [check] the oven temperature?", 
-                example_tr: "Fırının sıcaklığını kontrol ettin mi?", 
-                synonyms: "verify, examine, test", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-checkbox-check-mark-vector-illustration-white-background_1441-2392.jpg?w=740" 
-            },
-            { 
-                word: "cheese", 
-                meaning: "peynir", 
-                example_en: "I love pasta with extra [cheese].", 
-                example_tr: "Fazla peynirli makarnayı severim.", 
-                synonyms: "dairy product", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-cheese-piece-vector-illustration-white-background_1441-2391.jpg?w=740" 
-            },
-            { 
-                word: "chicken", 
-                meaning: "tavuk", 
-                example_en: "We ordered grilled [chicken] for dinner.", 
-                example_tr: "Akşam yemeği için ızgara tavuk sipariş ettik.", 
-                synonyms: "poultry, hen", 
-                image_url: "https://img.freepik.com/premium-vector/3d-cartoon-style-icon-chicken-bird-vector-illustration-white-background_1441-2390.jpg?w=740" 
-            }
-        ];
+        /**
+         * Kelime Listesi: Yeni kelimelerle güncellendi.
+         */
+        const wordList = [
+            { 
+                word: "can", 
+                meaning: "yapabilmek, kutu", 
+                example_en: "I [can] speak three languages fluently.", 
+                example_tr: "Üç dili akıcı bir şekilde konuşabiliyorum.", 
+                synonyms: "be able to, tin, container", 
+                image_url: "https://st4.depositphotos.com/10639414/23683/v/450/depositphotos_236838362-stock-illustration-vector-set-stickers-speech-bubbles.jpg" 
+            },
+            { 
+                word: "cannot", 
+                meaning: "yapamamak (can not)", 
+                example_en: "I [cannot] find my keys anywhere.", 
+                example_tr: "Anahtarlarımı hiçbir yerde bulamıyorum.", 
+                synonyms: "can't, be unable to", 
+                image_url: "https://static7.depositphotos.com/1000563/674/v/450/depositphotos_6748924-stock-illustration-car-key-with-remote-control.jpg" 
+            },
+            { 
+                word: "capital", 
+                meaning: "başkent, büyük harf, sermaye", 
+                example_en: "Ankara is the [capital] city of Turkey.", 
+                example_tr: "Ankara, Türkiye'nin başkentidir.", 
+                synonyms: "chief city, funds, assets", 
+                image_url: "https://st4.depositphotos.com/5430974/28283/v/450/depositphotos_282832262-stock-illustration-ankara-abstract-color-drawing-ankara.jpg" 
+            },
+            { 
+                word: "car", 
+                meaning: "araba, otomobil", 
+                example_en: "He bought a brand new red [car].", 
+                example_tr: "Yepyeni, kırmızı bir araba satın aldı.", 
+                synonyms: "automobile, vehicle", 
+                image_url: "https://media.istockphoto.com/id/1214396728/tr/vekt%C3%B6r/beyaz-arka-plan-izole-k%C4%B1rm%C4%B1z%C4%B1-araba-simgesi-k%C3%BC%C3%A7%C3%BCk-resim-araba-k%C4%B1rm%C4%B1z%C4%B1-sevimli-infografik.jpg?s=612x612&w=0&k=20&c=9OMw1tFrqZiOod0GEpnGs3o2osFmAdUUwy03x62Xe48=" 
+            },
+            { 
+                word: "card", 
+                meaning: "kart (kredi, oyun, kimlik)", 
+                example_en: "Did you bring your student [card]?", 
+                example_tr: "Öğrenci kartını getirdin mi?", 
+                synonyms: "ticket, plastic money", 
+                image_url: "https://media.istockphoto.com/id/1419375918/tr/vekt%C3%B6r/id-card-icon-drivers-license-identification-icon-vector-illustration.jpg?s=612x612&w=0&k=20&c=u04N3KPLo5K7AxRMFHL6jMuoBUqbwY0btH8zAuPx7JU=" 
+            },
+            { 
+                word: "career", 
+                meaning: "kariyer, meslek", 
+                example_en: "She decided to pursue a [career] in medicine.", 
+                example_tr: "Tıpta bir kariyer yapmaya karar verdi.", 
+                synonyms: "profession, occupation", 
+                image_url: "https://st2.depositphotos.com/1907633/6917/i/450/depositphotos_69170339-stock-photo-smart-medical-doctor-hand-showing.jpg" 
+            },
+            { 
+                word: "carrot", 
+                meaning: "havuç", 
+                example_en: "Rabbits love to eat [carrots].", 
+                example_tr: "Tavşanlar havuç yemeyi sever.", 
+                synonyms: "vegetable, root", 
+                image_url: "https://media.istockphoto.com/id/1882625245/tr/vekt%C3%B6r/photo-realistic-3d-carrot.jpg?s=612x612&w=0&k=20&c=MTyituJt6o0VesTAXDB4u6fr_pdRfNzAAaFi0ByMl3o=" 
+            },
+            { 
+                word: "carry", 
+                meaning: "taşımak, götürmek", 
+                example_en: "Help me [carry] these heavy boxes.", 
+                example_tr: "Bu ağır kutuları taşımama yardım et.", 
+                synonyms: "transport, bear, move", 
+                image_url: "https://media.istockphoto.com/id/1280857390/tr/vekt%C3%B6r/beyaz-arka-plan-%C3%BCzerinde-izole-karton-kutu-ile-3d-mockup-3d-ill%C3%BCstrasyon-karton-kutu.jpg?s=612x612&w=0&k=20&c=baxItg2CEr-u7njw4wvgnsbwXM03hxF4W-zAhFWPBSM=" 
+            },
+            { 
+                word: "cat", 
+                meaning: "kedi", 
+                example_en: "The neighbor's [cat] is very friendly.", 
+                example_tr: "Komşunun kedisi çok cana yakın.", 
+                synonyms: "feline, kitten", 
+                image_url: "https://st5.depositphotos.com/1007566/66341/v/450/depositphotos_663419010-stock-illustration-cute-kitten-sitting-vector-design.jpg" 
+            },
+            { 
+                word: "CD", 
+                meaning: "CD (Compact Disc)", 
+                example_en: "I found an old music [CD] in the drawer.", 
+                example_tr: "Çekmecede eski bir müzik CD'si buldum.", 
+                synonyms: "compact disc, album", 
+                image_url: "https://media.istockphoto.com/id/639534654/tr/vekt%C3%B6r/realistic-vector-cdwith-cover-icon-design-template.jpg?s=612x612&w=0&k=20&c=ESfGhzeHxS1XdIBFboBGsZ1KdN68-Kchj4Oqu-Q4Woo=" 
+            },
+            { 
+                word: "cent", 
+                meaning: "sent (para birimi)", 
+                example_en: "I only have fifty [cent]s left.", 
+                example_tr: "Sadece elli sentim kaldı.", 
+                synonyms: "penny, coin", 
+                image_url: "https://static5.depositphotos.com/1000244/438/v/450/depositphotos_4383782-stock-illustration-50-euro-cent.jpg" 
+            },
+            { 
+                word: "centre", 
+                meaning: "merkez, orta (center-ABD)", 
+                example_en: "The market is right in the [centre] of the town.", 
+                example_tr: "Pazar, kasabanın tam ortasında.", 
+                synonyms: "middle, hub, core", 
+                image_url: "https://img.freepik.com/vector-premium/creativo-tienda-bicicletas-construccion-vectorial-icono-arte_1080480-117992.jpg?semt=ais_hybrid&w=740&q=80" 
+            },
+            { 
+                word: "century", 
+                meaning: "yüzyıl", 
+                example_en: "The museum is home to art from the 17th [century].", 
+                example_tr: "Müze, 17. yüzyıldan kalma sanat eserlerine ev sahipliği yapıyor.", 
+                synonyms: "100 years, era", 
+                image_url: "https://thumbs.dreamstime.com/b/museum-building-illustration-historical-exhibitions-every-week-exhibitions-ice-age-antiquity-relics-middle-museum-193719167.jpg" 
+            },
+            { 
+                word: "chair", 
+                meaning: "sandalye, başkan", 
+                example_en: "Please take a [chair] and sit down.", 
+                example_tr: "Lütfen bir sandalye alıp oturun.", 
+                synonyms: "seat, bench, leader", 
+                image_url: "https://lens.usercontent.google.com/image?vsrid=CIeM-aTX4_L8YhACGAEiJDI2YmFjMzhkLTM2ZGItNGUyYy05YTQ3LTA3YThlMTNlZWUwZDIGIgJ3ZSgCOPHesqvppJED&gsessionid=MB_f0ENmrKoFH8lr0Y36yUu-KTZrGk5bDHD-8veHC4b_Dd41old88Q" 
+            },
+            { 
+                word: "change", 
+                meaning: "değiştirmek, bozuk para", 
+                example_en: "We need to [change] our meeting time.", 
+                example_tr: "Toplantı saatimizi değiştirmemiz gerekiyor.", 
+                synonyms: "alter, money, difference", 
+                image_url: "https://thumbs.dreamstime.com/b/group-professionals-engaged-meeting-around-round-table-discussing-important-business-matters-strategies-373675896.jpg" 
+            },
+            { 
+                word: "chart", 
+                meaning: "grafik, çizelge", 
+                example_en: "The sales [chart] shows a clear increase.", 
+                example_tr: "Satış grafiği net bir artış gösteriyor.", 
+                synonyms: "diagram, graph, table", 
+                image_url: "https://png.pngtree.com/thumb_back/fh260/background/20230703/pngtree-d-render-of-infographics-paper-elements-featuring-colorful-column-flat-graph-image_3788355.jpg" 
+            },
+            { 
+                word: "cheap", 
+                meaning: "ucuz", 
+                example_en: "You can find [cheap] clothes at the market.", 
+                example_tr: "Pazarda ucuz kıyafetler bulabilirsiniz.", 
+                synonyms: "inexpensive, affordable", 
+                image_url: "https://st4.depositphotos.com/30046358/40672/v/450/depositphotos_406720092-stock-illustration-clothes-emporium-flat-color-vector.jpg" 
+            },
+            { 
+                word: "check", 
+                meaning: "kontrol etmek, çek (banka)", 
+                example_en: "Did you [check] the oven temperature?", 
+                example_tr: "Fırının sıcaklığını kontrol ettin mi?", 
+                synonyms: "verify, examine, test", 
+                image_url: "https://us.123rf.com/450wm/whitecity/whitecity2411/whitecity241101689/237731388-kitchen-furniture-and-equipment-in-flat-style-vector-illustration-of-household-appliances.jpg?ver=6" 
+            },
+            { 
+                word: "cheese", 
+                meaning: "peynir", 
+                example_en: "I love pasta with extra [cheese].", 
+                example_tr: "Fazla peynirli makarnayı severim.", 
+                synonyms: "dairy product", 
+                image_url: "https://media.istockphoto.com/id/494565026/tr/foto%C4%9Fraf/macaroni-and-cheese.jpg?s=612x612&w=0&k=20&c=06gWZ5vfsqCFeaMx0VAkWD3lWxysGyfu6v9pPppq52o=" 
+            },
+            { 
+                word: "chicken", 
+                meaning: "tavuk", 
+                example_en: "We ordered grilled [chicken] for dinner.", 
+                example_tr: "Akşam yemeği için ızgara tavuk sipariş ettik.", 
+                synonyms: "poultry, hen", 
+                image_url: "https://png.pngtree.com/png-clipart/20230617/ourlarge/pngtree-fire-grilled-chicken-meat-logo-illustration-png-image_7153178.png" 
+            }
+        ];
 
-        let currentIndex = 0;
-        const container = document.getElementById('card-container');
-        const infoText = document.getElementById('info-text');
+        let currentIndex = 0;
+        const container = document.getElementById('card-container');
+        const infoText = document.getElementById('info-text');
 
-        let isSpeaking = false;
+        let isSpeaking = false;
 
-        function speakWord(text) {
-            if (isSpeaking) return;
-            
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const msg = new SpeechSynthesisUtterance();
-                msg.text = text;
-                msg.lang = 'en-US'; 
-                msg.rate = 0.9; 
-                
-                isSpeaking = true;
-                msg.onend = () => { isSpeaking = false; };
-                msg.onerror = () => { isSpeaking = false; console.error("Seslendirme hatası."); };
+        function speakWord(text) {
+            if (isSpeaking) return;
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const msg = new SpeechSynthesisUtterance();
+                msg.text = text;
+                msg.lang = 'en-US'; 
+                msg.rate = 0.9; 
+                
+                isSpeaking = true;
+                msg.onend = () => { isSpeaking = false; };
+                msg.onerror = () => { isSpeaking = false; console.error("Seslendirme hatası."); };
 
-                window.speechSynthesis.speak(msg);
-            } else {
-                console.warn("Tarayıcı metin okuma (Speech Synthesis) özelliğini desteklemiyor.");
-            }
-        }
+                window.speechSynthesis.speak(msg);
+            } else {
+                console.warn("Tarayıcı metin okuma (Speech Synthesis) özelliğini desteklemiyor.");
+            }
+        }
 
-        function updateInfoBar() {
-            infoText.textContent = `Kart ${currentIndex + 1} / ${wordList.length}`;
-        }
+        function updateInfoBar() {
+            infoText.textContent = `Kart ${currentIndex + 1} / ${wordList.length}`;
+        }
 
-        function createCard(data) {
-            const { word, meaning, example_en, example_tr, synonyms, image_url } = data;
-            
-            // Köşeli parantez içindeki kelimeyi vurgula
-            const highlightedExample = example_en.replace(/\[(.*?)\]/g, (match, p1) => `<span class="highlight">${p1}</span>`);
-            
-            // Eş anlamlılar boşsa '-' göster
-            const synonymsText = synonyms || '-';
+        function createCard(data) {
+            const { word, meaning, example_en, example_tr, synonyms, image_url } = data;
+            
+            // Köşeli parantez içindeki kelimeyi vurgula
+            const highlightedExample = example_en.replace(/\[(.*?)\]/g, (match, p1) => `<span class="highlight">${p1}</span>`);
+            
+            // Eş anlamlılar boşsa '-' göster
+            const synonymsText = synonyms || '-';
 
-            const cardHTML = `
-                <div class="card" id="active-card" onclick="nextCard(event)"> 
-                    
-                    <div class="word-image-display">
-                        <img src="${image_url}" alt="${word} kelimesini temsil eden görsel">
-                    </div>
+            const cardHTML = `
+                <div class="card" id="active-card" onclick="nextCard(event)"> 
+                    
+                    <div class="word-image-display">
+                        <img src="${image_url}" alt="${word} kelimesini temsil eden görsel">
+                    </div>
 
-                    <div class="header">
-                        <div class="word-row">
-                            <span class="speaker-icon" title="Dinle" onclick="event.stopPropagation(); speakWord('${word}')">🔊</span>
-                            <h1>${word}</h1>
-                        </div>
-                        <p class="meaning">${meaning}</p>
-                    </div>
+                    <div class="header">
+                        <div class="word-row">
+                            <span class="speaker-icon" title="Dinle" onclick="event.stopPropagation(); speakWord('${word}')">🔊</span>
+                            <h1>${word}</h1>
+                        </div>
+                        <p class="meaning">${meaning}</p>
+                    </div>
 
-                    <div class="box">
-                        <div class="row">
-                            <span class="tag">Ör.</span>
-                            <div class="content">
-                                <p class="en-sentence">${highlightedExample}</p>
-                                <div class="divider"></div>
-                                <p class="tr-sentence">${example_tr}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="box">
+                        <div class="row">
+                            <span class="tag">Ör.</span>
+                            <div class="content">
+                                <p class="en-sentence">${highlightedExample}</p>
+                                <div class="divider"></div>
+                                <p class="tr-sentence">${example_tr}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="box small">
-                        <div class="row">
-                            <span class="tag">Eş A.</span>
-                            <div class="content">
-                                <p class="synonyms-text">${synonymsText}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            container.innerHTML = cardHTML;
-            
-            setTimeout(() => {
-                const card = document.getElementById('active-card');
-                if(card) card.classList.add('active');
-            }, 50);
+                    <div class="box small">
+                        <div class="row">
+                            <span class="tag">Eş A.</span>
+                            <div class="content">
+                                <p class="synonyms-text">${synonymsText}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = cardHTML;
+            
+            setTimeout(() => {
+                const card = document.getElementById('active-card');
+                if(card) card.classList.add('active');
+            }, 50);
 
-            updateInfoBar();
-        }
-        
-        // Kartları ilerletme (Sağ ok, Boşluk, Tıklama)
-        const nextCard = (event) => {
-            // Seslendirme elementine tıklandığında ileri gitmeyi engellemek için kontrol
-            if (event && event.target.closest('.speaker-icon')) {
-                return;
-            }
+            updateInfoBar();
+        }
+        
+        // Kartları ilerletme (Sağ ok, Boşluk, Tıklama)
+        const nextCard = (event) => {
+            // Seslendirme elementine tıklandığında ileri gitmeyi engellemek için kontrol
+            if (event && event.target.closest('.speaker-icon')) {
+                return;
+            }
 
-            const activeCard = document.getElementById('active-card');
-            if (activeCard) {
-                activeCard.classList.remove('active');
-                // Kartın sağa doğru kaybolma animasyonu
-                activeCard.style.transform = 'translateX(100%) scale(0.9) rotate(5deg)'; 
-                activeCard.style.opacity = '0';
-            }
-            
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % wordList.length;
-                createCard(wordList[currentIndex]);
-            }, 300); 
-        };
-        
-        // Kartları geri alma (Sol ok)
-        const prevCard = () => {
-            const activeCard = document.getElementById('active-card');
-            if (activeCard) {
-                activeCard.classList.remove('active');
-                // Kartın sola doğru kaybolma animasyonu
-                activeCard.style.transform = 'translateX(-100%) scale(0.9) rotate(-5deg)';
-                activeCard.style.opacity = '0';
-            }
+            const activeCard = document.getElementById('active-card');
+            if (activeCard) {
+                activeCard.classList.remove('active');
+                // Kartın sağa doğru kaybolma animasyonu
+                activeCard.style.transform = 'translateX(100%) scale(0.9) rotate(5deg)'; 
+                activeCard.style.opacity = '0';
+            }
+            
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % wordList.length;
+                createCard(wordList[currentIndex]);
+            }, 300); 
+        };
+        
+        // Kartları geri alma (Sol ok)
+        const prevCard = () => {
+            const activeCard = document.getElementById('active-card');
+            if (activeCard) {
+                activeCard.classList.remove('active');
+                // Kartın sola doğru kaybolma animasyonu
+                activeCard.style.transform = 'translateX(-100%) scale(0.9) rotate(-5deg)';
+                activeCard.style.opacity = '0';
+            }
 
-            setTimeout(() => {
-                currentIndex = (currentIndex - 1 + wordList.length) % wordList.length;
-                createCard(wordList[currentIndex]);
-            }, 300); 
-        };
+            setTimeout(() => {
+                currentIndex = (currentIndex - 1 + wordList.length) % wordList.length;
+                createCard(wordList[currentIndex]);
+            }, 300); 
+        };
 
-        // Klavye Kontrolleri
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
-                e.preventDefault(); 
-                nextCard();
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                prevCard();
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                // O anki kelimeyi seslendir
-                speakWord(wordList[currentIndex].word);
-            }
-        });
+        // Klavye Kontrolleri
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault(); 
+                nextCard();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevCard();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                // O anki kelimeyi seslendir
+                speakWord(wordList[currentIndex].word);
+            }
+        });
 
-        // Tıklama olayının HTML'den çağrılması için global kapsamda tutulur 
-        window.nextCard = nextCard; 
-        window.speakWord = speakWord;
+        // Tıklama olayının HTML'den çağrılması için global kapsamda tutulur 
+        window.nextCard = nextCard; 
+        window.speakWord = speakWord;
 
-        // Sayfa Yüklendiğinde Başlatma
-        document.addEventListener('DOMContentLoaded', function() {
-            if (wordList.length > 0) {
-                createCard(wordList[currentIndex]);
-            } else {
-                container.innerHTML = '<h2>Liste boş.</h2>';
-            }
-        });
-        // --- JAVASCRIPT BİTİŞ ---
-    </script>
+        // Sayfa Yüklendiğinde Başlatma
+        document.addEventListener('DOMContentLoaded', function() {
+            if (wordList.length > 0) {
+                createCard(wordList[currentIndex]);
+            } else {
+                container.innerHTML = '<h2>Liste boş.</h2>';
+            }
+        });
+        // --- JAVASCRIPT BİTİŞ ---
+    </script>
 </body>
 </html>
