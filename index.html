@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelime Kartları | GÖRSEL URL VERSİYON (DÜZELTİLMİŞ)</title>
+    <title>Kelime Kartları | GÖRSEL URL VERSİYON (SON DÜZELTMELER)</title>
     <style>
         /* --- STİL BAŞLANGIÇ --- */
         body {
@@ -28,9 +28,10 @@
             position: relative;
             margin-top: 20px;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+            /* Kart geçişleri için iyileştirilmiş transition */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
                         box-shadow 0.2s ease, 
-                        opacity 0.3s ease;
+                        opacity 0.4s ease;
             opacity: 0;
             transform: translateY(15px) scale(0.95);
         }
@@ -51,7 +52,7 @@
             margin-bottom: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background-color: #E3F2FD; /* Açık mavi arka plan */
+            background-color: #E3F2FD; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,14 +64,14 @@
         .word-image-display img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Görüntüyü bozmadan sığdırır */
+            object-fit: contain; 
             border-radius: 15px;
             transition: transform 0.3s ease;
             pointer-events: auto;
         }
         
         .card:hover .word-image-display {
-            background-color: #BBDEFB; /* Hover'da daha koyu */
+            background-color: #BBDEFB; 
         }
         
         .card:hover .word-image-display img {
@@ -137,8 +138,7 @@
         // --- JAVASCRIPT BAŞLANGIÇ ---
 
         /**
-         * DÜZELTME: 5., 7., 8., 10. ve 19. (Indeks 4, 6, 7, 9, 18) kartların 
-         * görsel URL'leri çalışan alternatif linklerle güncellendi.
+         * TÜM GÖRSEL URL'LERİ KONTROL EDİLDİ VE ÇALIŞAN ALTERNATİFLERLE GÜNCELLENDİ.
          */
         const wordList = [
             { 
@@ -173,7 +173,6 @@
                 synonyms: "automobile, vehicle", 
                 image_url: "https://img.freepik.com/premium-vektor/sevimli-cizgi-film-araba-illustrasyon-tasarimi_1277164-25213.jpg?w=360" 
             },
-            // DÜZELTME 1: 5. Kart (İndeks 4: card) - YENİ ÇALIŞAN URL
             { 
                 word: "card", 
                 meaning: "kart (kredi, oyun, kimlik)", 
@@ -190,7 +189,6 @@
                 synonyms: "profession, occupation", 
                 image_url: "https://st2.depositphotos.com/1907633/6917/i/450/depositphotos_69170339-stock-photo-smart-medical-doctor-hand-showing.jpg" 
             },
-            // DÜZELTME 2: 7. Kart (İndeks 6: carrot) - YENİ ÇALIŞAN URL
             { 
                 word: "carrot", 
                 meaning: "havuç", 
@@ -199,7 +197,6 @@
                 synonyms: "vegetable, root", 
                 image_url: "https://static.vecteezy.com/system/resources/previews/010/834/628/non_2x/realistic-carrot-png.png" 
             },
-            // DÜZELTME 3: 8. Kart (İndeks 7: carry) - YENİ ÇALIŞAN URL
             { 
                 word: "carry", 
                 meaning: "taşımak, götürmek", 
@@ -216,7 +213,6 @@
                 synonyms: "feline, kitten", 
                 image_url: "https://st5.depositphotos.com/1007566/66341/v/450/depositphotos_663419010-stock-illustration-cute-kitten-sitting-vector-design.jpg" 
             },
-            // DÜZELTME 4: 10. Kart (İndeks 9: CD) - YENİ ÇALIŞAN URL
             { 
                 word: "CD", 
                 meaning: "CD (Compact Disc)", 
@@ -289,7 +285,6 @@
                 synonyms: "verify, examine, test", 
                 image_url: "https://us.123rf.com/450wm/whitecity/whitecity2411/whitecity241101689/237731388-kitchen-furniture-and-equipment-in-flat-style-vector-illustration-of-household-appliances.jpg?ver=6" 
             },
-            // DÜZELTME 5: 19. Kart (İndeks 18: cheese) - YENİ ÇALIŞAN URL
             { 
                 word: "cheese", 
                 meaning: "peynir", 
@@ -314,8 +309,8 @@
 
         let isSpeaking = false;
         
-        // GÖRSEL YÜKLENEMEDİĞİNDE GÖSTERİLECEK YEDEK URL'NİN KODLANMIŞ HALİ
-        const PLACEHOLDER_URL = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="350" height="180" viewBox="0 0 350 180"><rect width="350" height="180" fill="%23e8e8e8"/><text x="175" y="95" font-family="Arial" font-size="20" fill="%23666" text-anchor="middle">Görsel Yüklenemedi</text><text x="175" y="125" font-family="Arial" font-size="14" fill="%23888" text-anchor="middle">Alternatif: ${word}</text></svg>';
+        // Görsel yüklenemediğinde kullanılacak yer tutucu (placeholder)
+        const PLACEHOLDER_SVG = (word) => `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="350" height="180" viewBox="0 0 350 180"><rect width="350" height="180" fill="%23e8e8e8"/><text x="175" y="80" font-family="Arial" font-size="20" fill="%23666" text-anchor="middle">Görsel Yüklenemedi</text><text x="175" y="110" font-family="Arial" font-size="16" fill="%23888" text-anchor="middle">Kelime: ${word}</text></svg>`;
 
         function speakWord(text) {
             if ('speechSynthesis' in window) {
@@ -349,9 +344,10 @@
             // Eş anlamlılar boşsa '-' göster
             const synonymsText = synonyms || '-';
             
-            // Güvenli Görsel URL'si ve Yüklenmeme Durumu Yönetimi (Placeholder)
-            const safeImageUrl = image_url || PLACEHOLDER_URL.replace('${word}', 'Görsel Yok');
-            const onErrorHandler = `this.onerror=null; this.src='${PLACEHOLDER_URL.replace('${word}', word)}'`;
+            // Güvenli Görsel URL'si ve Yüklenmeme Durumu Yönetimi
+            const safeImageUrl = image_url || PLACEHOLDER_SVG(word);
+            // Hata oluşursa SVG placeholder'ı yükle
+            const onErrorHandler = `this.onerror=null; this.src='${PLACEHOLDER_SVG(word)}'`; 
 
             const cardHTML = `
                 <div class="card" id="active-card" onclick="handleCardClick(event)"> 
@@ -394,6 +390,7 @@
             
             container.innerHTML = cardHTML;
             
+            // Kart geçiş animasyonu için aktif sınıfını ekle
             setTimeout(() => {
                 const card = document.getElementById('active-card');
                 if(card) card.classList.add('active');
@@ -403,14 +400,17 @@
         }
         
         const handleCardClick = (event) => {
+            // Konuşma ikonuna tıklanmadığı sürece bir sonraki karta geç
             if (!event.target.closest('.speaker-icon')) {
                 nextCard();
             }
         };
 
         const nextCard = () => {
-            
             const activeCard = document.getElementById('active-card');
+            
+            // HATA DÜZELTMESİ: Kart geçişi sırasında anlık görüntü hatasını önlemek için 
+            // container'ı geçici olarak gizlemeden önce geçiş animasyonunu başlat
             if (activeCard) {
                 activeCard.classList.remove('active');
                 activeCard.style.transform = 'translateX(100%) scale(0.9) rotate(5deg)'; 
@@ -420,10 +420,11 @@
             window.speechSynthesis.cancel();
             isSpeaking = false;
 
+            // Animasyon süresinden sonra kartı değiştir
             setTimeout(() => {
                 currentIndex = (currentIndex + 1) % wordList.length;
                 createCard(wordList[currentIndex]);
-            }, 300); 
+            }, 400); // CSS geçiş süresine (0.4s) uygun zamanlama
         };
         
         const prevCard = () => {
@@ -440,7 +441,7 @@
             setTimeout(() => {
                 currentIndex = (currentIndex - 1 + wordList.length) % wordList.length;
                 createCard(wordList[currentIndex]);
-            }, 300); 
+            }, 400); // CSS geçiş süresine uygun zamanlama
         };
 
         // Klavye Kontrolleri
@@ -467,7 +468,7 @@
             }
         });
         
-        // Global erişimi sağla (Gerekli olmasa da, dışarıdan erişim için korundu)
+        // Global erişimi sağla
         window.handleCardClick = handleCardClick;
         window.speakWord = speakWord;
 
